@@ -7,7 +7,7 @@ const SERVER_PORT = process.env.PORT || 7860;
 const NEZHA_SERVER = process.env.NEZHA_SERVER || 'nz.f4i.cn';
 const NEZHA_PORT = process.env.NEZHA_PORT || '5555';   // 无需设置TLS,当哪吒端口为443时，自动开启--tls
 const NEZHA_KEY = process.env.NEZHA_KEY || 'NjoeLcZDZwt4FdFQEq';
-const UUID = process.env.UUID || 'fd80f56e-93f3-4c85-b2a8-c77216c509a7'; 
+const UUID = process.env.UUID || 'fd80f56e-93f3-4c85-b2a8-c77216c509a7'; //此处UUID只是传递变量，不可更改
 const DOMAIN = process.env.DOMAIN || 'wxxuux-hugx-test.hf.space'; 
 
 //赋权
