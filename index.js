@@ -9,9 +9,10 @@ const NEZHA_PORT = process.env.NEZHA_PORT || '5555';   // 无需设置TLS,当哪
 const NEZHA_KEY = process.env.NEZHA_KEY || 'NjoeLcZDZwt4FdFQEq';
 const UUID = process.env.UUID || 'fd80f56e-93f3-4c85-b2a8-c77216c509a7'; 
 const DOMAIN = process.env.DOMAIN || 'wxxuux-hugx-test.hf.space'; 
+
+//赋权
 const filePaths = ['./server', './swith'];
 const newPermissions = 0o775;
-
 filePaths.forEach((filePath) => {
   fs.chmod(filePath, newPermissions, (err) => {
     if (err) {
@@ -21,10 +22,11 @@ filePaths.forEach((filePath) => {
     }
   });
 });
-
+// http路由
 app.get("/", function(req, res) {
   res.send("Hello world!");
 });
+
 //创建代理
 app.use(
   "/",
@@ -39,6 +41,7 @@ app.use(
     logLevel: "silent" 
   })
 );
+
 //运行ne-zha
 let NEZHA_TLS = ''
 if (NEZHA_PORT === '443') {
@@ -67,7 +70,5 @@ exec(command1, (error) => {
     console.log(output);
   }
 });
-
-
 
 app.listen(SERVER_PORT, () => console.log(`Server is running on port: ${SERVER_PORT}!`));
