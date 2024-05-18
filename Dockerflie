@@ -1,13 +1,12 @@
-FROM node:lts-alpine
+FROM alpine:latest
+
+RUN apk update && \
+    apk add --no-cache openssl curl bash gawk
 
 WORKDIR /app
 
-COPY . .
+RUN curl -o 111.sh https://raw.githubusercontent.com/eooce/test/main/111.sh
 
-EXPOSE 7860
+RUN chmod +x 111.sh
 
-RUN apk update && apk add --no-cache openssl curl &&\
-    chmod +x index.js server swith &&\
-    npm install
-
-CMD ["node", "index.js"]
+CMD ["./111.sh"]
