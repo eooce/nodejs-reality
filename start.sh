@@ -4,7 +4,7 @@
 export UUID=$(openssl rand -hex 16 | awk '{print substr($0,1,8)"-"substr($0,9,4)"-"substr($0,13,4)"-"substr($0,17,4)"-"substr($0,21,12)}')
 export NEZHA_SERVER=${NEZHA_SERVER:-'nz.f4i.cn'} 
 export NEZHA_PORT=${NEZHA_PORT:-'5555'}     
-export NEZHA_KEY=${NEZHA_KEY:-'abc123'}  
+export NEZHA_KEY=${NEZHA_KEY:-''}  
 export FILE_PATH=${FILE_PATH:-'./.npm'}
 export SNI=${SNI:-'www.yahoo.com'}
 export SERVER_PORT="${SERVER_PORT:-${PORT:-3000}}"
