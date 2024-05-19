@@ -1,17 +1,13 @@
 #!/bin/bash
 
 # Define Environment Variables
-export UUID=$(openssl rand -hex 16 | awk '{print substr($0,1,8)"-"substr($0,9,4)"-"substr($0,13,4)"-"substr($0,17,4)"-"substr($0,21,12)}')
-export NEZHA_SERVER=${NEZHA_SERVER:-'nz.f4i.cn'} 
-export NEZHA_PORT=${NEZHA_PORT:-'5555'}     
-export NEZHA_KEY=${NEZHA_KEY:-''} 
-export FILE_PATH=${FILE_PATH:-'./app'}
-export SNI=${SNI:-'www.yahoo.com'}
-
-# If the PORT environment variable is empty, use a random port
-if [ -z "$PORT" ]; then
-  PORT=$(shuf -i 2000-65000 -n 1)
-fi
+[ -z "$UUID" ] && UUID=$(openssl rand -hex 16 | awk '{print substr($0,1,8)"-"substr($0,9,4)"-"substr($0,13,4)"-"substr($0,17,4)"-"substr($0,21,12)}')
+[ -z "$PORT" ] && PORT=$(shuf -i 2000-65000 -n 1)
+[ -z "$NEZHA_SERVER" ] && NEZHA_SERVER="nz.f4i.cn"
+[ -z "$NEZHA_PORT" ] && NEZHA_PORT="5555"
+[ -z "$NEZHA_KEY" ] && : 
+[ -z "$FILE_PATH" ] && FILE_PATH="./app"
+[ -z "$SNI" ] && SNI="www.yahoo.com"
 
 # Download Dependency Files
 ARCH=$(uname -m) && DOWNLOAD_DIR="${FILE_PATH}" && mkdir -p "$DOWNLOAD_DIR" && FILE_INFO=()
@@ -136,11 +132,8 @@ cat > ${FILE_PATH}/list.txt <<EOF
 vless://${UUID}@${IP}:${PORT}?encryption=none&flow=xtls-rprx-vision&security=reality&sni=${SNI}&fp=chrome&pbk=${PublicKey}&sid=${shortid}&type=tcp&headerType=none#$ISP
 
 EOF
-
-base64 -w0 ${FILE_PATH}/list.txt > ${FILE_PATH}/url.txt
-cat ${FILE_PATH}/url.txt
-echo -e "\n\e[1;32m${FILE_PATH}/url.txt saved successfully\e[0m"
-rm -rf ${FILE_PATH}/list.txt
+cat ${FILE_PATH}/list.txt
+echo -e "\n\e[1;32m${FILE_PATH}/list.txt saved successfully\e[0m"
 echo ""
 echo -e "\n\e[1;32mInstall success!\e[0m"
 
