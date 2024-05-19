@@ -16,3 +16,8 @@ VPS一键运行命令，无交互，默认随机端口，如需自定义端口�
 ```
 bash -c "$(curl -L https://raw.githubusercontent.com/eooce/nodejs-reality/main/start.sh)"
 ```
+
+自定义哪吒，端口一键安装示列命令
+```
+NEZHA_SERVER=nz.abcd.com NEZHA_PORT=5555 NEZHA_KEY=1234abcd PORT=5678 bash -c "$(curl -L https://raw.githubusercontent.com/eooce/nodejs-reality/main/start.sh)"
+```
