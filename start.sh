@@ -134,7 +134,7 @@ cat ${FILE_PATH}/list.txt
 echo -e "\n\e[1;32m${FILE_PATH}/list.txt saved successfully\e[0m"
 echo ""
 sleep 10 
-cleaar
+clear
 echo -e "\n\e[1;32mRunning success!\e[0m"
 
 exit 0
