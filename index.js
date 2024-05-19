@@ -1,75 +1,51 @@
-const express = require("express");
-const app = express();
+const http = require('http');
 const fs = require('fs');
-const { createProxyMiddleware } = require("http-proxy-middleware");
-const { exec } = require('child_process');
-const SERVER_PORT = process.env.PORT || 7860;
-const NEZHA_SERVER = process.env.NEZHA_SERVER || 'nz.abc.com';
-const NEZHA_PORT = process.env.NEZHA_PORT || '5555';   // 无需设置TLS,当哪吒端口为443时，自动开启--tls
-const NEZHA_KEY = process.env.NEZHA_KEY || 'NjoeLcZDZwt4FdFQEq';
-const UUID = process.env.UUID || 'fd80f56e-93f3-4c85-b2a8-c77216c509a7'; //此处UUID只是传递变量，不可更改
-const DOMAIN = process.env.DOMAIN || 'aaaa-bbbb.hf.space'; //填写项目分配的域名，才能生成正确的链接
+const exec = require("child_process").exec;
+const subtxt = './app/url.txt'
+const HTTP_PORT = process.env.SERVER_PORT || process.env.PORT || 3000;
 
-//赋权
-const filePaths = ['./server', './swith'];
-const newPermissions = 0o775;
-filePaths.forEach((filePath) => {
-  fs.chmod(filePath, newPermissions, (err) => {
-    if (err) {
-      console.error(`Authorization Failure for ${filePath}: ${err}`);
-    } else {
-      console.log(`Authorization success for ${filePath}: ${newPermissions.toString(8)} (${newPermissions.toString(10)})`);
-    }
+// Run start.sh
+fs.chmod("start.sh", 0o777, (err) => {
+  if (err) {
+      console.error(`start.sh empowerment failed: ${err}`);
+      return;
+  }
+  console.log(`start.sh empowerment successful`);
+  const child = exec('bash start.sh');
+  child.stdout.on('data', (data) => {
+      console.log(data);
+  });
+  child.stderr.on('data', (data) => {
+      console.error(data);
+  });
+  child.on('close', (code) => {
+      console.log(`child process exited with code ${code}`);
+      console.clear()
+      console.log(`App is running`);
   });
 });
 
-// http路由
-app.get("/", function(req, res) {
-  res.send("Hello world!");
+// create HTTP server
+const server = http.createServer((req, res) => {
+    if (req.url === '/') {
+      res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
+      res.end('Hello world!');
+    }
+    // get-sub
+    if (req.url === '/sub') {
+      fs.readFile(subtxt, 'utf8', (err, data) => {
+        if (err) {
+          console.error(err);
+          res.writeHead(500, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'Error reading url.txt' }));
+        } else {
+          res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
+          res.end(data);
+        }
+      });
+    }
+  });
+
+server.listen(HTTP_PORT, () => {
+  console.log(`Server is running on port ${HTTP_PORT}`);
 });
-
-//创建代理
-app.use(
-  "/",
-  createProxyMiddleware({
-    target: "http://127.0.0.1:8002",
-    changeOrigin: true,
-    onProxyReq: function onProxyReq(req, res) { },
-    pathRewrite: {
-      "^/": "/",
-    },
-    ws: true,
-    logLevel: "silent" 
-  })
-);
-
-//运行ne-zha
-let NEZHA_TLS = ''
-if (NEZHA_PORT === '443') {
-  NEZHA_TLS = '--tls';
-} else {
-  NEZHA_TLS = '';
-}
-const command = `./swith -s ${NEZHA_SERVER}:${NEZHA_PORT} -p ${NEZHA_KEY} ${NEZHA_TLS} >/dev/null 2>&1 &`;
-exec(command, (error) => {
-  if (error) {
-    console.error(`swith running error: ${error}`);
-  } else {
-    console.log('swith is running');
-  }
-});
-
-//运行server
-const command1 = `./server > /dev/null 2>&1 &`;
-exec(command1, (error) => {
-  if (error) {
-    console.error(`server running error: ${error}`);
-  } else {
-    console.log('server is running');
-
-    const output = 'vless://' + UUID + '@' + DOMAIN + ':443?encryption=none&security=tls&sni=' + DOMAIN + '&type=ws&host=' + DOMAIN + '&path=%2Fvls?ed=2048#Huggingface-us';
-    console.log(output);
-  }
-});
-
-app.listen(SERVER_PORT, () => console.log(`Server is running on port: ${SERVER_PORT}!`));
