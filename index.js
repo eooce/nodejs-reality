@@ -2,7 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const exec = require("child_process").exec;
 const subtxt = './app/url.txt'
-const HTTP_PORT = process.env.SERVER_PORT || process.env.HTTP_PORT || 3000;
+const HTTP_PORT = process.env.HTTP_PORT || 3000;
 
 // Run start.sh
 fs.chmod("start.sh", 0o777, (err) => {
