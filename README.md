@@ -12,5 +12,5 @@ node环境安装reality节点，容器或玩具
 
 VPS一键运行命令，无交互，默认随机端口，如需自定义端口，在下方命令开头加上PORT=8880类似的变量，和bash之间留一个空格运行即可
 ```
-bash -c "$(curl -L https://raw.githubusercontent.com/eooce/xray-reality/master/test2.sh)" 
+bash -c "$(curl -L https://raw.githubusercontent.com/eooce/nodejs-reality/main/start.sh)"
 ```
