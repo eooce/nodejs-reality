@@ -6,7 +6,7 @@ node环境安装reality节点，容器或玩具
   | PORT         | 否 |  7860  |reality端口     |
   | NEZHA_SERVER | 否 |        | 哪吒服务端域名，例如nz.aaa.com    |
   | NEZHA_PORT   | 否 |  5555  | 哪吒端口为{443,8443,2096,2087,2083,2053}其中之一时，开启tls|
-  | NEZHA_KEY    | 否 |        | 哪吒客务端专用KEY                |
+  | NEZHA_KEY    | 否 |        | 哪吒客户端专用KEY                |
   | SNI          | 否 | www.yahoo.com     |节点伪装域名|
 
 
