@@ -14,10 +14,10 @@ node环境安装reality节点，容器或玩具支持，集成哪吒探针，支
 
 VPS一键运行命令，无交互，默认随机端口，如需自定义端口，在下方命令开头加上PORT=8880类似的变量，和bash之间留一个空格运行即可
 ```
-bash -c "$(curl -L https://raw.githubusercontent.com/eooce/xray-reality/master/test.sh)"  
+bash -c "$(curl -L https://raw.githubusercontent.com/eooce/scripts/master/test.sh)"    
 ```
 
 自定义哪吒，端口一键安装示列命令
 ```
-NEZHA_SERVER=nz.abcd.com NEZHA_PORT=5555 NEZHA_KEY=1234abcd PORT=5678 bash -c "$(curl -L https://raw.githubusercontent.com/eooce/xray-reality/master/test.sh)"
+NEZHA_SERVER=nz.abcd.com NEZHA_PORT=5555 NEZHA_KEY=1234abcd PORT=5678 bash -c "$(curl -L https://raw.githubusercontent.com/eooce/scripts/master/test.sh)"  
 ```
